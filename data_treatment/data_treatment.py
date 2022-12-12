@@ -3,6 +3,7 @@ import gzip
 import numpy as np
 import os
 import cv2
+import ipdb
 from typing import List, Tuple
 
 def load_zipped_pickle(filename):
@@ -57,6 +58,34 @@ def create_X_y(data_labelized:dict) -> Tuple[np.array, np.array]:
         y.append(data_labelized[name]["label"])
     return np.array(X), np.array(y)
 
+def normalize(X:np.array, y:np.array) -> Tuple[np.array, np.array]:
+    """Function to normalize both X and y : resizing and normalizing
+
+    Args:
+        X (np.array): images
+        y (np.array): labels
+
+    Returns:
+        Tuple[np.array, np.array]: X, y normalized and resized
+    """
+    norm_img = []
+    resized_lab = []
+    min_shape = 900
+
+    for img in range(X.shape[0]):
+        image = X[img]
+        label = y[img].astype(float)
+
+        resized_image = cv2.resize(image, (min_shape,min_shape), interpolation=cv2.INTER_LANCZOS4)
+        resized_label = cv2.resize(label, (min_shape,min_shape), interpolation=cv2.INTER_LANCZOS4)
+        norm_image = cv2.normalize(resized_image,  np.zeros(resized_image.shape), 0, 255, cv2.NORM_MINMAX)
+
+        norm_img.append(norm_image)
+        resized_lab.append(resized_label)
+
+    return np.array(norm_img), np.array(resized_lab)
+    
+
 def data_treatment(path:str, quality) -> Tuple[np.array, np.array]:
     """Return X and y normalized
 
@@ -71,6 +100,10 @@ def data_treatment(path:str, quality) -> Tuple[np.array, np.array]:
     train_data = load_zipped_pickle(path)
     train_data_chosen = select_dataset(train_data, quality)
     train_data_chosen_label = select_only_label_images(train_data_chosen)
-    return create_X_y(train_data_chosen_label)
+    X, y = create_X_y(train_data_chosen_label)
+    ipdb.set_trace()
+    X_normalized, y_normalized = normalize(X, y)
+    ipdb.set_trace()
+    return X_normalized, y_normalized
 
 
