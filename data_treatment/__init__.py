@@ -1,1 +1,2 @@
 from data_treatment.data_treatment import data_treatment
+from data_treatment.utils import labelize_image, visualize
