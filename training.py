@@ -24,7 +24,7 @@ def pipeline():
     tensorbord=TensorBoard(log_dir='logs')
     callback=[EarlyStop , Reduce_LR,model_check,tensorbord]
 
-    history = model.fit(X_train, y_train, validation_split=0.1, batch_size=128, epochs=100, 
+    history = model.fit(X_train, y_train, validation_split=0.2, batch_size=64, epochs=20, 
                         callbacks=callback)
     model.save(filepath)
     # evaluation
