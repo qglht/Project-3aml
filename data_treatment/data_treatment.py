@@ -70,7 +70,7 @@ def normalize(X:np.array, y:np.array) -> Tuple[np.array, np.array]:
     """
     norm_img = []
     resized_lab = []
-    min_shape = 900
+    min_shape = 512
 
     for img in range(X.shape[0]):
         image = X[img]
@@ -101,9 +101,7 @@ def data_treatment(path:str, quality) -> Tuple[np.array, np.array]:
     train_data_chosen = select_dataset(train_data, quality)
     train_data_chosen_label = select_only_label_images(train_data_chosen)
     X, y = create_X_y(train_data_chosen_label)
-    ipdb.set_trace()
     X_normalized, y_normalized = normalize(X, y)
-    ipdb.set_trace()
     return X_normalized, y_normalized
 
 

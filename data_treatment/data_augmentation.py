@@ -1,15 +1,14 @@
-import pickle
-import gzip
 import numpy as np
-import os
 import cv2
-from typing import List, Tuple
+from typing import Tuple
 import random
 from scipy import ndimage
-from keras.preprocessing.image import ImageDataGenerator
-import tensorflow as tf
 
+<<<<<<< HEAD
 def random_crop(img:np.aray, iymg:np.array, width:int, height:int)->np.array:
+=======
+def random_crop(img:np.array, yimg:np.array, width:int, height:int)->np.array:
+>>>>>>> 2dd1160ab2bcfe3d2ef40a13037dfd556f0a590b
     assert img.shape[0] >= height
     assert img.shape[1] >= width
     x = random.randint(0, img.shape[1] - width)
@@ -44,16 +43,27 @@ def translate(img: np.array, axis:int=0, shift:int = 20)->np.array:
 
 def augment(X: np.array, y: np.array) -> Tuple[np.array, np.array]:
     X_augmented, y_augmented = [], []
+<<<<<<< HEAD
     for i, img in enumerate(X_augmented):
+=======
+    for i, img in enumerate(X):
+>>>>>>> 2dd1160ab2bcfe3d2ef40a13037dfd556f0a590b
         yimg = y[i]
         # Rotating
-        X_augmented += [np.rot90(img, k=1), np.rot90(img, k=2), np.rot90(img, k=3)]
-        y_augmented += [np.rot90(yimg, k=1), np.rot90(yimg, k=2), np.rot90(yimg, k=3)]
+        # X_augmented += [np.rot90(img, k=1), np.rot90(img, k=2), np.rot90(img, k=3)]
+        # y_augmented += [np.rot90(yimg, k=1), np.rot90(yimg, k=2), np.rot90(yimg, k=3)]
         # Zooming
+<<<<<<< HEAD
         for _ in range(4):
             a,b = random_crop(img, yimg, 50, 50)
             X_augmented.append(a)
             y_augmented.append(b)
+=======
+        # for _ in range(4):
+        #     a,b = random_crop(img,yimg,50,50)
+        #     X_augmented.append(a)
+        #     y_augmented.append(b)
+>>>>>>> 2dd1160ab2bcfe3d2ef40a13037dfd556f0a590b
         # Shearing
         for _ in range(2):
             X_augmented.append(shear(img))
