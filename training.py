@@ -14,7 +14,7 @@ def pipeline():
     X_train, y_train = augment(X_train, y_train)
     # data_augmentation
     # model training / tuning
-    model = UNET(X_train.shape[1], X_train.shape[2], 1, 32)
+    model = UNET(X_train.shape[1], X_train.shape[2], 1, 16)
     filepath = "model.h5"
 
     EarlyStop=EarlyStopping(patience=10,restore_best_weights=True)
