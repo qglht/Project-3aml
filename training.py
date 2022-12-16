@@ -15,7 +15,7 @@ def pipeline():
     X_train, X_test, y_train, y_test = train_test_split(X_train, y_train, test_size=0.20, random_state=42)
     # data_augmentation
     # model training / tuning
-    model = UNET(X_train.shape[1], X_train.shape[2], 1, 16)
+    model = UNET(X_train.shape[1], X_train.shape[2], 1, 32)
     filepath = "model.h5"
 
     EarlyStop=EarlyStopping(patience=10,restore_best_weights=True)
@@ -24,7 +24,7 @@ def pipeline():
     tensorbord=TensorBoard(log_dir='logs')
     callback=[EarlyStop , Reduce_LR,model_check,tensorbord]
 
-    history = model.fit(X_train, y_train, validation_split=0.2, batch_size=64, epochs=20, 
+    history = model.fit(X_train, y_train, validation_split=0.2, batch_size=64, epochs=100, 
                         callbacks=callback)
     model.save(filepath)
     # evaluation
