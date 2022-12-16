@@ -9,10 +9,9 @@ from sklearn.model_selection import train_test_split
 
 def pipeline():
     # data_treatment (choice of the dataset and normalization)
-    X_train, y_train = data_treatment("task3/train.pkl", "expert")
+    X_train, y_train = data_treatment("task3/cropped_train.pkl", "expert")
     # here do the data augmentation and visualize
     X_train, y_train = augment(X_train, y_train)
-    X_train, X_test, y_train, y_test = train_test_split(X_train, y_train, test_size=0.20, random_state=42)
     # data_augmentation
     # model training / tuning
     model = UNET(X_train.shape[1], X_train.shape[2], 1, 16)
