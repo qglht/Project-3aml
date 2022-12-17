@@ -14,16 +14,16 @@ def pipeline():
     X_train, y_train = augment(X_train, y_train)
     # data_augmentation
     # model training / tuning
-    model = UNET(X_train.shape[1], X_train.shape[2], 1, 16)
+    model = UNET(X_train.shape[1], X_train.shape[2], 1, 32)
     filepath = "model.h5"
 
     EarlyStop=EarlyStopping(patience=10,restore_best_weights=True)
-    Reduce_LR=ReduceLROnPlateau(monitor='val_accuracy',verbose=2,factor=0.5,min_lr=0.00001)
+    Reduce_LR=ReduceLROnPlateau(monitor='loss',verbose=2,factor=0.5,min_lr=0.00001)
     model_check=ModelCheckpoint('model.h5',monitor='val_loss',verbose=1,save_best_only=True)
     tensorbord=TensorBoard(log_dir='logs')
     callback=[EarlyStop , Reduce_LR,model_check,tensorbord]
 
-    history = model.fit(X_train, y_train, validation_split=0.2, batch_size=128, epochs=100, 
+    history = model.fit(X_train, y_train, validation_split=0.2, batch_size=128, epochs=20, 
                         callbacks=callback)
     model.save(filepath)
     # evaluation
