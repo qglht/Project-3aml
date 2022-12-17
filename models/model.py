@@ -6,6 +6,7 @@ from keras.layers.pooling import MaxPooling2D
 from keras.layers import concatenate
 from keras.callbacks import EarlyStopping, ModelCheckpoint
 from keras import backend as K
+from keras.metrics import IoU
 
 import tensorflow as tf
 from keras import backend as K
@@ -89,7 +90,9 @@ def UNET(img_height, img_width, img_channels, start_neurons):
 
     model = Model(inputs=[inputs], outputs=[output_layer])
 
-    model.compile(loss=jaccard_loss, optimizer='adam', metrics=[jaccard_similarity, 'accuracy'])
+    optimizer = tf.keras.optimizers.Adam(learning_rate=1e-4, weight_decay=1e-5)
+
+    model.compile(loss=jaccard_loss, optimizer=optimizer, metrics=[jaccard_similarity])
 
     model.summary()
     return model

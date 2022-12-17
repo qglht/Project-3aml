@@ -18,10 +18,9 @@ def pipeline():
     filepath = "model.h5"
 
     EarlyStop=EarlyStopping(patience=10,restore_best_weights=True)
-    Reduce_LR=ReduceLROnPlateau(monitor='loss',verbose=2,factor=0.5,min_lr=0.00001)
     model_check=ModelCheckpoint('model.h5',monitor='val_loss',verbose=1,save_best_only=True)
     tensorbord=TensorBoard(log_dir='logs')
-    callback=[EarlyStop , Reduce_LR,model_check,tensorbord]
+    callback=[EarlyStop , model_check,tensorbord]
 
     history = model.fit(X_train, y_train, validation_split=0.2, batch_size=64, epochs=40, 
                         callbacks=callback)
