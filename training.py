@@ -10,8 +10,10 @@ from sklearn.model_selection import train_test_split
 def pipeline():
     # data_treatment (choice of the dataset and normalization)
     X_train, y_train = data_treatment("task3/cropped_train.pkl", "expert")
+    X_val, y_val = data_treatment("task3/cropped_validation.pkl", "expert")
     # here do the data augmentation and visualize
     X_train, y_train = augment(X_train, y_train)
+    X_val, y_val = augment(X_val, y_val)
     # data_augmentation
     # model training / tuning
     model = UNET(X_train.shape[1], X_train.shape[2], 1, 16)
@@ -22,7 +24,7 @@ def pipeline():
     tensorbord=TensorBoard(log_dir='logs')
     callback=[EarlyStop , model_check,tensorbord]
 
-    history = model.fit(X_train, y_train, validation_split=0.2, batch_size=64, epochs=40, 
+    history = model.fit(X_train, y_train, validation_data=(X_val, y_val), batch_size=64, epochs=40, 
                         callbacks=callback)
     model.save(filepath)
     # evaluation
