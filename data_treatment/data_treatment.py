@@ -56,6 +56,7 @@ def create_X_y(data_labelized:dict) -> Tuple[np.array, np.array]:
     for name in data_labelized.keys():
         X.append(data_labelized[name]["image"])
         y.append(data_labelized[name]["label"])
+    ipdb.set_trace()
     return np.array(X), np.array(y)
 
 def normalize(X:np.array, y:np.array) -> Tuple[np.array, np.array]:
