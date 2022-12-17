@@ -98,7 +98,7 @@ def UNET(img_height, img_width, img_channels, start_neurons):
     return model
 
 class HyperUnet(kt.HyperModel):
-    def UNET(self, hp):
+    def build(self, hp):
         img_height, img_width = 128,128
         inputs = Input((img_height, img_width, 1))
         start_neurons = hp.Choice("start-neurons",[16,32])
