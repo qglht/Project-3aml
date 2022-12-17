@@ -90,7 +90,7 @@ def UNET(img_height, img_width, img_channels, start_neurons):
 
     model = Model(inputs=[inputs], outputs=[output_layer])
 
-    optimizer = tf.keras.optimizers.Adam(learning_rate=1e-4, weight_decay=1e-5)
+    optimizer = tf.keras.optimizers.Adam(learning_rate=1e-4)
 
     model.compile(loss=jaccard_loss, optimizer=optimizer, metrics=[jaccard_similarity])
 
