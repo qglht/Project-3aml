@@ -27,8 +27,8 @@ def select_dataset(data:List[dict], quality:str) -> List[dict]:
 
 
 list_videos = select_dataset(load_zipped_pickle("task3/train.pkl"), "expert")
-list_train = list_videos[:14]
-list_validation = list_videos[14:17]
+list_train = list_videos[:15]
+list_validation = list_videos[15:17]
 list_test = list_videos[17:]
 save_zipped_pickle(list_train, "task3/cropped_train.pkl")
 save_zipped_pickle(list_train, "task3/cropped_test.pkl")
