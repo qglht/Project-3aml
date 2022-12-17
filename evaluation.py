@@ -8,6 +8,7 @@ from sklearn.model_selection import train_test_split
 import numpy as np
 from models import jaccard_loss, jaccard_similarity
 from evaluation import evaluation
+import tensorflow as tf
 
 
 def pipeline():
@@ -16,9 +17,14 @@ def pipeline():
     X_test, y_test = augment(X_test, y_test)
     # data_augmentation
     # model training / tuning
-    model = keras.models.load_model('model.h5', custom_objects={"jaccard_loss":jaccard_loss, "jaccard_similarity":jaccard_similarity})
+    model = keras.models.load_model('model_bs_64.h5', custom_objects={"jaccard_loss":jaccard_loss, "jaccard_similarity":jaccard_similarity}, compile=False)
+    model.compile(loss=jaccard_loss, optimizer=tf.keras.optimizers.Adam(learning_rate=1e-5), metrics=[jaccard_similarity])
     y_pred = model.predict(X_test)
     y_pred = y_pred[:,:,:,0]
+    y_pred = y_pred > 0.5
+    for i in range(y_pred.shape[0]):
+        visualize([y_pred[i], y_test[i]])
+
     print(f"Score IoU : {evaluation(y_test, y_pred)}")
 
     # evaluation

@@ -25,7 +25,10 @@ def select_dataset(data:List[dict], quality:str) -> List[dict]:
     Returns:
         List[dict]: dataset with only the quality chosen
     """
-    return [dict_frames for dict_frames in data if dict_frames["dataset"]==quality]
+    if "all":
+        return data
+    else : 
+        return [dict_frames for dict_frames in data if dict_frames["dataset"]==quality]
 
 def select_only_label_images(data:List[dict])->dict:
     """Retrieves only the images with labels from the dataset
