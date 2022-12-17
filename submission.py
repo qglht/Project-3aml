@@ -57,8 +57,10 @@ def submit(test_data:list, model:Model, height_unet:int, width_unet:int)->None:
         ) 
     save_zipped_pickle(predictions, 'my_predictions.pkl')
 
-def submission(path_model):
+def submission():
     # be careful, there isn't any label for test data so y_test does not exist
     test_data = load_zipped_pickle("task3/test.pkl")
-    model = keras.models.load_model(path_model, custom_objects={"jaccard_loss":jaccard_loss, "jaccard_similarity":jaccard_similarity})
+    model = keras.models.load_model('model_bs_64.h5', custom_objects={"jaccard_loss":jaccard_loss, "jaccard_similarity":jaccard_similarity})
     submit(test_data=test_data, model=model, height_unet=256, width_unet=256)
+
+submission()
