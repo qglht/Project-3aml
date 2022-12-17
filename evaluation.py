@@ -16,7 +16,7 @@ def pipeline():
     X_test, y_test = augment(X_test, y_test)
     # data_augmentation
     # model training / tuning
-    model = keras.models.load_model('model.h5', custom_objects={"jaccard_loss":jaccard_loss, "jaccard_similarity":jaccard_similarity})
+    model = keras.models.load_model('model_bs_64.h5', custom_objects={"jaccard_loss":jaccard_loss, "jaccard_similarity":jaccard_similarity})
     y_pred = model.predict(X_test)
     y_pred = y_pred[:,:,:,0]
     print(f"Score IoU : {evaluation(y_test, y_pred)}")
