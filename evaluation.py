@@ -13,7 +13,7 @@ import tensorflow as tf
 
 def pipeline():
     # data_treatment (choice of the dataset and normalization)
-    X_test, y_test = data_treatment("task3/cropped_validation.pkl", "expert")
+    X_test, y_test = data_treatment("task3/cropped_validation.pkl", "all")
     X_test, y_test = augment(X_test, y_test)
     # data_augmentation
     # model training / tuning

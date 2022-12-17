@@ -27,6 +27,6 @@ def visualize(display_list):
     for i in range(len(display_list)):
         plt.subplot(1, len(display_list), i+1)
         plt.title(title[i])
-        plt.imshow(display_list[i].reshape(256,256))
+        plt.imshow(display_list[i].reshape(128,128))
         plt.axis('off')
     plt.show()
