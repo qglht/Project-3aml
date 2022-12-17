@@ -42,7 +42,6 @@ def submit(test_data:list, model:Model, height_unet:int, width_unet:int)->None:
         video_resized_original = preprocess_test(data, height_target, width_target)
         print(len(video_resized_original))
         for i, frame in enumerate(video_resized_original):
-            plt.show()
             frame_resized = cv2.resize(frame, (height_unet,width_unet), interpolation=cv2.INTER_NEAREST)
             frame_norm = cv2.normalize(frame_resized,  np.zeros(frame_resized.shape), 0, 255, cv2.NORM_MINMAX)
 
