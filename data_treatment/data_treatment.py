@@ -70,7 +70,7 @@ def normalize(X:np.array, y:np.array) -> Tuple[np.array, np.array]:
     """
     norm_img = []
     resized_lab = []
-    min_shape = 256
+    min_shape = 512
 
     for img in range(X.shape[0]):
         image = X[img]
