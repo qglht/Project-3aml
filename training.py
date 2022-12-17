@@ -41,11 +41,10 @@ def pipeline_tuning():
     # model training / tuning
     tuner = kt.RandomSearch(HyperUnet(), objective=["loss"], max_trials=20)
 
-    EarlyStop=EarlyStopping(patience=10,restore_best_weights=True)
-    model_check=ModelCheckpoint('model.h5',monitor='val_loss',verbose=1,save_best_only=True)
+    EarlyStop=EarlyStopping(monitor='loss', patience=10,restore_best_weights=True)
+    model_check=ModelCheckpoint('model.h5',monitor='loss',verbose=1,save_best_only=True)
     tensorbord=TensorBoard(log_dir='logs')
-    Reduce_LR=ReduceLROnPlateau(monitor='val_accuracy',verbose=2,factor=0.5,min_lr=0.00001)
-    callback=[EarlyStop , model_check,Reduce_LR,tensorbord]
+    callback=[EarlyStop , model_check,tensorbord]
     tuner.search(X_train, y_train, epochs=20, callbacks=callback)
     best_model = tuner.get_best_models()[0]
     best_model.save("best_model_tuning")

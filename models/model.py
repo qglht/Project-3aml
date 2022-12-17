@@ -155,7 +155,7 @@ class HyperUnet(kt.HyperModel):
 
         model = Model(inputs=[inputs], outputs=[output_layer])
 
-        model.compile(loss=jaccard_loss, optimizer=keras.optimizers.Adam(learning_rate=hp.Float('learning_rate', min_value=0.0001, max_value=0.01, sampling="log"), weight_decay=hp.Float('weight_decay', min_value=0.0001, max_value=0.1, sampling="log")), metrics=[jaccard_similarity])
+        model.compile(loss=jaccard_loss, optimizer=keras.optimizers.Adam(learning_rate=hp.Float('learning_rate', min_value=0.0001, max_value=0.01, sampling="log"), weight_decay=hp.Float('decay', min_value=0.0001, max_value=0.1, sampling="log")), metrics=[jaccard_similarity])
 
         model.summary()
         return model
