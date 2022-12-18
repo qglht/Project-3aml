@@ -48,4 +48,4 @@ def pipeline_tuning():
     best_model = tuner.get_best_models()[0]
     best_model.save("best_model_tuning.h5")
 
-pipeline_training()
+pipeline_tuning()
