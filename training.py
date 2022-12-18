@@ -38,14 +38,14 @@ def pipeline_tuning():
     X_val, y_val = augment(X_val, y_val)
     # data_augmentation
     # model training / tuning
-    tuner = kt.RandomSearch(HyperUnet(), objective=["loss"], max_trials=20)
+    tuner = kt.RandomSearch(HyperUnet(), objective=["loss"], max_trials=40)
 
     EarlyStop=EarlyStopping(monitor='loss', patience=10,restore_best_weights=True)
     model_check=ModelCheckpoint('model.h5',monitor='loss',verbose=1,save_best_only=True)
     tensorbord=TensorBoard(log_dir='logs')
     callback=[EarlyStop , model_check,tensorbord]
-    tuner.search(X_train, y_train, epochs=20, callbacks=callback)
+    tuner.search(X_train, y_train, epochs=40, callbacks=callback)
     best_model = tuner.get_best_models()[0]
-    best_model.save("best_model_tuning")
+    best_model.save("best_model_tuning.h5")
 
 pipeline_training()

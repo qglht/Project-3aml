@@ -101,7 +101,7 @@ class HyperUnet(kt.HyperModel):
     def build(self, hp):
         img_height, img_width = 128,128
         inputs = Input((img_height, img_width, 1))
-        start_neurons = hp.Choice("start-neurons",[16,32])
+        start_neurons = hp.Choice("start-neurons",[32,64])
 
         conv1 = Conv2D(start_neurons * 1, (3, 3), activation="relu", padding="same")(inputs)
         conv1 = Conv2D(start_neurons * 1, (3, 3), activation="relu", padding="same")(conv1)
@@ -155,7 +155,7 @@ class HyperUnet(kt.HyperModel):
 
         model = Model(inputs=[inputs], outputs=[output_layer])
 
-        model.compile(loss=jaccard_loss, optimizer=keras.optimizers.Adam(learning_rate=hp.Float('learning_rate', min_value=0.0001, max_value=0.01, sampling="log"), decay=hp.Float('decay', min_value=0.0001, max_value=0.1, sampling="log")), metrics=[jaccard_similarity])
+        model.compile(loss=jaccard_loss, optimizer=keras.optimizers.Adam(learning_rate=hp.Float('learning_rate', min_value=0.00001, max_value=0.001, sampling="log"), decay=hp.Float('decay', min_value=0.0001, max_value=0.1, sampling="log")), metrics=[jaccard_similarity])
 
         model.summary()
         return model
@@ -163,7 +163,7 @@ class HyperUnet(kt.HyperModel):
     def fit(self, hp, model, *args, **kwargs):
         history = model.fit(
             *args,
-            batch_size=hp.Choice("batch_size", [64,128]),
+            batch_size=hp.Choice("batch_size", [32,64]),
             **kwargs,
         )
         print(history.history)
