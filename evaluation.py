@@ -20,7 +20,7 @@ def pipeline():
     model = keras.models.load_model('model.h5', custom_objects={"jaccard_loss":jaccard_loss, "jaccard_similarity":jaccard_similarity})
     y_pred = model.predict(X_test)
     y_pred = y_pred[:,:,:,0]
-    y_pred = y_pred > 0.5
+    # y_pred = y_pred > 0.5
     # for i in range(y_pred.shape[0]):
     #     visualize([y_pred[i], y_test[i]])
 
