@@ -46,7 +46,7 @@ def submit(test_data:list, model:Model, height_unet:int, width_unet:int)->None:
             frame_norm = cv2.normalize(frame_resized,  np.zeros(frame_resized.shape), 0, 255, cv2.NORM_MINMAX)
 
             pred = model.predict(frame_norm.reshape(1,height_unet, width_unet,1))
-            pred = pred > 0.5
+            # pred = pred > 0.5
             pred = pred * 1
             prediction[:,:,i] = cv2.resize(pred[0,:,:,0], (width_target, height_target ), interpolation = cv2.INTER_NEAREST)
         predictions.append({
