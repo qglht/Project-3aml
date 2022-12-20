@@ -9,11 +9,12 @@ import keras_tuner as kt
 
 def pipeline_training():
     # data_treatment (choice of the dataset and normalization)
-    X_train, y_train = data_treatment("task3/cropped_train.pkl", "all")
-    X_val, y_val = data_treatment("task3/cropped_validation.pkl", "all")
+    X_train, y_train = data_treatment("task3/train.pkl", "expert")
+    X_val, y_val = data_treatment("task3/train.pkl", "amateur")
     # here do the data augmentation and visualize
     X_train, y_train = augment(X_train, y_train)
     X_val, y_val = augment(X_val, y_val)
+
     # data_augmentation
     # model training / tuning
     model = UNET(X_train.shape[1], X_train.shape[2], 1, 32)
@@ -42,10 +43,10 @@ def pipeline_tuning():
 
     EarlyStop=EarlyStopping(monitor='loss', patience=10,restore_best_weights=True)
     model_check=ModelCheckpoint('model.h5',monitor='val_loss',verbose=1,save_best_only=True)
-    tensorbord=TensorBoard(log_dir='logs')
+    tensorbord=TensorBoard(log_dir='logs_val')
     callback=[EarlyStop , model_check,tensorbord]
-    tuner.search(X_train, y_train, epochs=40, callbacks=callback)
+    tuner.search(X_train, y_train, epochs=30, callbacks=callback)
     best_model = tuner.get_best_models()[0]
     best_model.save("best_model_tuning.h5")
 
-pipeline_tuning()
+pipeline_training()
