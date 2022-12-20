@@ -38,7 +38,7 @@ def pipeline_tuning():
     X_val, y_val = augment(X_val, y_val)
     # data_augmentation
     # model training / tuning
-    tuner = kt.RandomSearch(HyperUnet(), objective=["loss"], max_trials=40)
+    tuner = kt.RandomSearch(HyperUnet(), objective=["loss"], max_trials=20)
 
     EarlyStop=EarlyStopping(monitor='loss', patience=10,restore_best_weights=True)
     model_check=ModelCheckpoint('model.h5',monitor='val_loss',verbose=1,save_best_only=True)
