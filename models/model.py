@@ -167,4 +167,4 @@ class HyperUnet(kt.HyperModel):
             **kwargs,
         )
         print(history.history)
-        return history.history["loss"]
+        return history.history["val_loss"]

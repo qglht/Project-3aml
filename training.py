@@ -41,7 +41,7 @@ def pipeline_tuning():
     tuner = kt.RandomSearch(HyperUnet(), objective=["loss"], max_trials=40)
 
     EarlyStop=EarlyStopping(monitor='loss', patience=10,restore_best_weights=True)
-    model_check=ModelCheckpoint('model.h5',monitor='loss',verbose=1,save_best_only=True)
+    model_check=ModelCheckpoint('model.h5',monitor='val_loss',verbose=1,save_best_only=True)
     tensorbord=TensorBoard(log_dir='logs')
     callback=[EarlyStop , model_check,tensorbord]
     tuner.search(X_train, y_train, epochs=40, callbacks=callback)
